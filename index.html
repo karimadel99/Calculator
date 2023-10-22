@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      padding: 10px;
+      border: 3px solid #ccc;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+    .result {
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      border: 3px solid #ccc;
+
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <div class="result">
+          <input type="text" id="result" class="form-control" disabled>
+        </div>
+        <div class="calculator">
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(7)">7</button>
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(8)">8</button>
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(9)">9</button>
+          <button class="btn btn-dark btn-lg" onclick="appendOperator('/')">/</button>
+
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(4)">4</button>
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(5)">5</button>
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(6)">6</button>
+          <button class="btn btn-dark btn-lg" onclick="appendOperator('*')">*</button>
+
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(1)">1</button>
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(2)">2</button>
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(3)">3</button>
+          <button class="btn btn-dark btn-lg" onclick="appendOperator('-')">-</button>
+
+          <button class="btn btn-primary btn-lg" onclick="appendNumber(0)">0</button>
+          <button class="btn btn-danger btn-lg" onclick="clearResult()">C</button>
+          <button class="btn btn-dark btn-lg" onclick="calculate()">=</button>
+          <button class="btn btn-dark btn-lg" onclick="appendOperator('+')">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentResult = 0;
+    let operator = '';
+    let isOperatorClicked = false;
+
+    function appendNumber(number) {
+      if (isOperatorClicked) {
+        document.getElementById('result').value = '';
+        isOperatorClicked = false;
+      }
+      document.getElementById('result').value += number;
+    }
+
+    function appendOperator(op) {
+      operator = op;
+      isOperatorClicked = true;
+      currentResult = parseFloat(document.getElementById('result').value);
+    }
+
+    function calculate() {
+      const input = parseFloat(document.getElementById('result').value);
+      let result;
+
+      if (operator === '+') {
+        result = currentResult + input;
+      } else if (operator === '-') {
+        result = currentResult - input;
+      } else if (operator === '*') {
+        result = currentResult * input;
+      } else if (operator === '/') {
+        result = currentResult / input;
+      }
+
+      document.getElementById('result').value = result;
+      currentResult = 0;
+      operator = '';
+    }
+
+    function clearResult() {
+      document.getElementById('result').value = '';
+      currentResult = 0;
+      operator = '';
+    }
+  </script>
+</body>
+</html>
